@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout ::head">
+    <title>Createproduct</title>
+</head>
+<body>
+<h3>Add product</h3>
+<p>
+    <a th:href="@{/products}">
+        Back to product list
+    </a>
+</p>
+<div id="form">
+    <form method="POST" novalidate="novalidate"
+          th:action="@{/products/save}" th:object="${product}">
+        <input th:field="*{id}" type="hidden"/>
+        <div>
+            <label for="name">Name</label>
+            <input id="name" th:field="*{name}" type="text"/>
+        </div>
+        <div>
+            <label for="color">Color</label>
+            <input id="color" th:field="*{color}" type="text"/>
+        </div>
+        <div>
+            <label for="price">Price</label>
+            <input id="price" th:field="*{price}" type="text"/>
+        </div>
+        <div>
+            <label for="quantity"> Quantity</label>
+            <input id="quantity" th:field="*{quantity}" type="text">
+        </div>
+        <input type="submit" value="Save"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

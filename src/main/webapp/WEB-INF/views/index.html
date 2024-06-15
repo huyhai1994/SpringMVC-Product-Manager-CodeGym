@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!---TODO: Khai báo namespace thymeleaf thông qua thuộc tính th:
+-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!---TODO:  Gắn phần head và footer
+        đã được khai báo trong file layout.html:-->
+<head th:replace="/layout :: head">
+    <title>Listproduct</title>
+</head>
+<body>
+<h3>products</h3>
+<p>
+    <!---
+    TODO: Thuộc tính th:href khai báo đường link trong thẻ a.-->
+    <a th:href="@{/products/create}">
+        <!---
+        TODO: Chú ý: Đoạn mã sau đây trên trang index.html
+         sẽ điều hướng đến trang create.html.-->
+        Add new product
+    </a>
+</p>
+
+<div class="notify">
+    <!--
+    TODO: Thuộc tính th:if sử dụng để kiểm tra điều kiện.
+    -->
+    <div th:if="${success}">
+        <!---
+        TODO: ${...} là biểu thức đánh giá các biến,
+            biểu thức hay model.
+            -->
+        <span th:text="${success}"></span>
+        <!--
+        TODO:Bạn chú ý tại file index.html,
+         đoạn mã sau để hiển thị thông báo:
+        -->
+    </div>
+</div>
+
+<table id="products">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>color</th>
+        <th>price</th>
+        <th>quantity</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!--- TODO: Thuộc tính th:each tương ứng với câu lệnh for each.-->
+    <tr th:each="row,rowStat : ${products}">
+        <!--- TODO: ${products} là danh sách sản phẩm sẽ được lặp,
+                chính là model products được controller truyền lên view.
+                Thuộc tính th:text dùng để đổ dữ liệu dưới dạng text vào
+                thẻ HTML.-->
+        <!--TODO: rowStat là một biến trạng thái, giúp chúng ta theo dõi vòng lặp.-->
+        <td th:text="${row.getName()}"></td>
+        <!---TODO:  row đại diện cho một sản phẩm tại một bước lặp cụ thể.-->
+        <td th:text="${row.getColor()}"></td>
+        <td><span th:text="${#numbers.formatDecimal(row.price, 0, 'COMMA', 2, 'POINT')}"> </span> VND</td>
+        <td th:text="${row.getQuantity()}"></td>
+        <!--
+        TODO: Đoạn mã sau đây trên trang
+              index.html sẽ điều hướng đến trang update.html:
+        -->
+        <td><a th:href="@{/products/{id}/edit(id=${row.getId()})}">edit</a></td>
+        <!--
+        TODO: - Đoạn mã sau đây trên trang index.html
+            sẽ điều hướng đến trong delete.html:
+        -->
+        <td><a th:href="@{/products/{id}/delete(id=${row.getId()})}">delete</a></td>
+        <!--
+        TODO: Đoạn mã sau đây trên trang index.html
+              sẽ điều hướng đến trang view.html:
+        -->
+        <td><a th:href="@{/products/{id}/view(id=${row.getId()})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
